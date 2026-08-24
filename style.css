@@ -1696,3 +1696,198 @@ footer strong {
     }
 
 }
+
+/* =========================================================
+   CORRECCIÓN CAMPO FECHA EN iOS / SAFARI
+========================================================= */
+
+/* El contenedor del formulario nunca debe poder
+   crecer más allá de la tarjeta */
+
+.quote-card,
+.quote-card form,
+.form-group,
+.form-row {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+
+/* Cada columna del formulario */
+
+.form-row > .form-group {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+
+/* Todos los campos */
+
+.quote-card input,
+.quote-card select {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   CAMPO DE FECHA
+========================================================= */
+
+.quote-card input[type="date"] {
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+
+    height: 55px;
+
+    box-sizing: border-box !important;
+
+    -webkit-box-sizing: border-box !important;
+
+    -webkit-appearance: none;
+
+    appearance: none;
+
+    padding: 0 17px;
+
+    overflow: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 1rem;
+
+    color: white;
+
+    background: #0e0e0e;
+
+    border: 1px solid rgba(255,255,255,0.13);
+
+    border-radius: 7px;
+
+}
+
+
+/* El texto interno de la fecha */
+
+.quote-card input[type="date"]::-webkit-date-and-time-value {
+
+    width: 100%;
+
+    min-width: 0;
+
+    text-align: left;
+
+    margin: 0;
+
+}
+
+
+/* Elementos internos de Safari */
+
+.quote-card input[type="date"]::-webkit-datetime-edit {
+
+    min-width: 0;
+
+    width: 100%;
+
+    padding: 0;
+
+}
+
+
+.quote-card input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 0;
+
+}
+
+
+.quote-card input[type="date"]::-webkit-datetime-edit-text {
+
+    padding: 0 2px;
+
+}
+
+
+.quote-card input[type="date"]::-webkit-datetime-edit-month-field,
+.quote-card input[type="date"]::-webkit-datetime-edit-day-field,
+.quote-card input[type="date"]::-webkit-datetime-edit-year-field {
+
+    padding: 0;
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .quote-card {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+        box-sizing: border-box !important;
+
+        overflow: hidden;
+
+    }
+
+
+    .quote-card form {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+    }
+
+
+    .quote-card .form-group {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+    }
+
+
+    .quote-card input[type="date"] {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+    }
+
+}
