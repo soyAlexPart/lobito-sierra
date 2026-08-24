@@ -1698,141 +1698,100 @@ footer strong {
 }
 
 /* =========================================================
-   CORRECCIÓN CAMPO FECHA EN iOS / SAFARI
+   CAMPO DE FECHA - CORRECCIÓN iPHONE / SAFARI
 ========================================================= */
 
-/* El contenedor del formulario nunca debe poder
-   crecer más allá de la tarjeta */
+/* Evita que las columnas del formulario puedan crecer */
 
 .quote-card,
 .quote-card form,
 .form-group,
-.form-row {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-}
-
-
-/* Cada columna del formulario */
-
+.form-row,
 .form-row > .form-group {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-}
-
-
-/* Todos los campos */
-
-.quote-card input,
-.quote-card select {
-    display: block;
-
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-
     box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-
-    margin: 0;
+    min-width: 0;
+    max-width: 100%;
 }
 
 
-/* =========================================================
-   CAMPO DE FECHA
-========================================================= */
+/* Campo de fecha */
 
 .quote-card input[type="date"] {
 
-    width: 100% !important;
+    display: block;
 
-    max-width: 100% !important;
+    width: calc(100% - 2px) !important;
+
+    max-width: calc(100% - 2px) !important;
 
     min-width: 0 !important;
 
     height: 55px;
 
+    margin: 0;
+
+    padding: 0 16px;
+
     box-sizing: border-box !important;
 
     -webkit-box-sizing: border-box !important;
 
-    -webkit-appearance: none;
+    /* IMPORTANTE:
+       NO usamos appearance:none.
+       Safari necesita su apariencia nativa
+       para mostrar correctamente el calendario.
+    */
 
-    appearance: none;
+    -webkit-appearance: auto;
 
-    padding: 0 17px;
-
-    overflow: hidden;
+    appearance: auto;
 
     font-family: Arial, Helvetica, sans-serif;
 
-    font-size: 1rem;
+    font-size: 16px;
 
     color: white;
 
-    background: #0e0e0e;
+    background-color: #0e0e0e;
 
     border: 1px solid rgba(255,255,255,0.13);
 
     border-radius: 7px;
 
+    outline: none;
+
 }
 
 
-/* El texto interno de la fecha */
+/* Valor interno de Safari */
 
 .quote-card input[type="date"]::-webkit-date-and-time-value {
 
-    width: 100%;
-
     min-width: 0;
+
+    width: 100%;
 
     text-align: left;
 
-    margin: 0;
-
 }
 
 
-/* Elementos internos de Safari */
+/* Campos internos */
 
 .quote-card input[type="date"]::-webkit-datetime-edit {
 
-    min-width: 0;
-
-    width: 100%;
-
     padding: 0;
 
 }
 
 
-.quote-card input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+/* Indicador del calendario */
 
-    width: 100%;
+.quote-card input[type="date"]::-webkit-calendar-picker-indicator {
 
-    min-width: 0;
+    margin-left: auto;
 
-    padding: 0;
-
-}
-
-
-.quote-card input[type="date"]::-webkit-datetime-edit-text {
-
-    padding: 0 2px;
-
-}
-
-
-.quote-card input[type="date"]::-webkit-datetime-edit-month-field,
-.quote-card input[type="date"]::-webkit-datetime-edit-day-field,
-.quote-card input[type="date"]::-webkit-datetime-edit-year-field {
-
-    padding: 0;
+    opacity: 0.8;
 
 }
 
@@ -1845,48 +1804,69 @@ footer strong {
 
     .quote-card {
 
-        width: 100% !important;
+        width: 100%;
 
-        max-width: 100% !important;
+        max-width: 100%;
 
-        min-width: 0 !important;
+        min-width: 0;
 
-        box-sizing: border-box !important;
-
-        overflow: hidden;
+        box-sizing: border-box;
 
     }
 
 
     .quote-card form {
 
-        width: 100% !important;
+        width: 100%;
 
-        max-width: 100% !important;
+        max-width: 100%;
 
-        min-width: 0 !important;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+    }
+
+
+    .quote-card .form-row {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        min-width: 0;
+
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        box-sizing: border-box;
 
     }
 
 
     .quote-card .form-group {
 
-        width: 100% !important;
+        width: 100%;
 
-        max-width: 100% !important;
+        max-width: 100%;
 
-        min-width: 0 !important;
+        min-width: 0;
+
+        box-sizing: border-box;
 
     }
 
 
     .quote-card input[type="date"] {
 
-        width: 100% !important;
+        width: calc(100% - 2px) !important;
 
-        max-width: 100% !important;
+        max-width: calc(100% - 2px) !important;
 
         min-width: 0 !important;
+
+        box-sizing: border-box !important;
 
     }
 
