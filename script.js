@@ -34,6 +34,34 @@ const fechaInput =
 const currentYear =
     document.getElementById("currentYear");
 
+const dateDisplay = document.getElementById("dateDisplay");
+
+if (fecha && dateDisplay) {
+
+    fecha.addEventListener("change", function () {
+
+        if (this.value) {
+
+            const [year, month, day] = this.value.split("-");
+
+            dateDisplay.textContent =
+                `${day}/${month}/${year}`;
+
+            dateDisplay.classList.add("has-date");
+
+        } else {
+
+            dateDisplay.textContent =
+                "Selecciona una fecha...";
+
+            dateDisplay.classList.remove("has-date");
+
+        }
+
+    });
+
+}
+
 
 /* =========================================================
    MENÚ RESPONSIVE
