@@ -2,18 +2,11 @@
    CONFIGURACIÓN
 ========================================================= */
 
-
-/*
-    ========================================================
-    NÚMERO DE WHATSAPP
-    ========================================================
-*/
-
 const WHATSAPP_NUMBER = "524111742093";
 
 
 /* =========================================================
-   ELEMENTOS DE LA PÁGINA
+   ELEMENTOS GENERALES
 ========================================================= */
 
 const menuToggle =
@@ -28,39 +21,110 @@ const backToTop =
 const quoteForm =
     document.getElementById("quoteForm");
 
-const fechaInput =
-    document.getElementById("fecha");
-
 const currentYear =
     document.getElementById("currentYear");
 
-const dateDisplay = document.getElementById("dateDisplay");
 
-if (fecha && dateDisplay) {
+/* =========================================================
+   ELEMENTOS DEL FORMULARIO
+========================================================= */
 
-    fecha.addEventListener("change", function () {
+const tipoEventoInput =
+    document.getElementById("tipoEvento");
 
-        if (this.value) {
+const fechaInput =
+    document.getElementById("fecha");
 
-            const [year, month, day] = this.value.split("-");
+const dateDisplay =
+    document.getElementById("dateDisplay");
 
-            dateDisplay.textContent =
-                `${day}/${month}/${year}`;
+const horaInicioInput =
+    document.getElementById("horaInicio");
 
-            dateDisplay.classList.add("has-date");
+const horaFinInput =
+    document.getElementById("horaFin");
 
-        } else {
+const servicioInput =
+    document.getElementById("servicio");
 
-            dateDisplay.textContent =
-                "Selecciona una fecha...";
+const ubicacionInput =
+    document.getElementById("ubicacion");
 
-            dateDisplay.classList.remove("has-date");
+const nombreLugarInput =
+    document.getElementById("nombreLugar");
 
-        }
+const tipoLugarInput =
+    document.getElementById("tipoLugar");
 
-    });
+const invitadosInput =
+    document.getElementById("invitados");
 
-}
+const nombreInput =
+    document.getElementById("nombre");
+
+const telefonoInput =
+    document.getElementById("telefono");
+
+const comentariosInput =
+    document.getElementById("comentarios");
+
+
+/* =========================================================
+   ELEMENTOS AUXILIARES
+========================================================= */
+
+const durationBox =
+    document.getElementById("durationBox");
+
+const durationText =
+    document.getElementById("durationText");
+
+const mapsPreview =
+    document.getElementById("mapsPreview");
+
+const mapsPreviewText =
+    document.getElementById("mapsPreviewText");
+
+const mapsLink =
+    document.getElementById("mapsLink");
+
+const comentariosCounter =
+    document.getElementById("comentariosCounter");
+
+
+/* =========================================================
+   ERRORES
+========================================================= */
+
+const tipoEventoError =
+    document.getElementById("tipoEventoError");
+
+const fechaError =
+    document.getElementById("fechaError");
+
+const horaInicioError =
+    document.getElementById("horaInicioError");
+
+const horaFinError =
+    document.getElementById("horaFinError");
+
+const servicioError =
+    document.getElementById("servicioError");
+
+const ubicacionError =
+    document.getElementById("ubicacionError");
+
+const nombreLugarError =
+    document.getElementById("nombreLugarError");
+
+const tipoLugarError =
+    document.getElementById("tipoLugarError");
+
+const nombreError =
+    document.getElementById("nombreError");
+
+const telefonoError =
+    document.getElementById("telefonoError");
 
 
 /* =========================================================
@@ -91,11 +155,6 @@ if (menuToggle && navMenu) {
         }
     );
 
-
-    /*
-        Cerrar menú al seleccionar
-        una sección.
-    */
 
     const menuLinks =
         navMenu.querySelectorAll("a");
@@ -202,12 +261,8 @@ function establecerFechaMinima() {
         ).padStart(2, "0");
 
 
-    const fechaHoy =
-        `${year}-${month}-${day}`;
-
-
     fechaInput.min =
-        fechaHoy;
+        `${year}-${month}-${day}`;
 
 }
 
@@ -216,36 +271,450 @@ establecerFechaMinima();
 
 
 /* =========================================================
-   ELEMENTOS DEL FORMULARIO
+   MOSTRAR FECHA SELECCIONADA
 ========================================================= */
 
-const nombreInput =
-    document.getElementById("nombre");
+if (fechaInput && dateDisplay) {
 
-const tipoEventoInput =
-    document.getElementById("tipoEvento");
+    fechaInput.addEventListener(
+        "change",
+        function () {
 
-const horaInput =
-    document.getElementById("hora");
+            if (this.value) {
+
+                const partes =
+                    this.value.split("-");
 
 
-const nombreError =
-    document.getElementById("nombreError");
+                const year =
+                    partes[0];
 
-const tipoEventoError =
-    document.getElementById(
-        "tipoEventoError"
+                const month =
+                    partes[1];
+
+                const day =
+                    partes[2];
+
+
+                dateDisplay.textContent =
+                    `${day}/${month}/${year}`;
+
+
+                dateDisplay.classList.add(
+                    "has-date"
+                );
+
+            } else {
+
+                dateDisplay.textContent =
+                    "Selecciona una fecha...";
+
+
+                dateDisplay.classList.remove(
+                    "has-date"
+                );
+
+            }
+
+        }
     );
 
-const fechaError =
-    document.getElementById(
-        "fechaError"
+}
+
+
+/* =========================================================
+   CONVERTIR HORA A MINUTOS
+========================================================= */
+
+function convertirHoraAMinutos(
+    horaTexto
+) {
+
+    if (!horaTexto) {
+        return null;
+    }
+
+
+    const partes =
+        horaTexto.trim().split(" ");
+
+
+    if (partes.length !== 2) {
+        return null;
+    }
+
+
+    const horaMinuto =
+        partes[0].split(":");
+
+
+    let hora =
+        parseInt(
+            horaMinuto[0],
+            10
+        );
+
+
+    const minutos =
+        parseInt(
+            horaMinuto[1],
+            10
+        );
+
+
+    const periodo =
+        partes[1].toUpperCase();
+
+
+    if (
+        Number.isNaN(hora) ||
+        Number.isNaN(minutos)
+    ) {
+
+        return null;
+
+    }
+
+
+    if (periodo === "AM") {
+
+        if (hora === 12) {
+            hora = 0;
+        }
+
+    } else if (periodo === "PM") {
+
+        if (hora !== 12) {
+            hora += 12;
+        }
+
+    }
+
+
+    return (
+        hora * 60
+        + minutos
     );
 
-const horaError =
-    document.getElementById(
-        "horaError"
+}
+
+
+/* =========================================================
+   CALCULAR DURACIÓN
+========================================================= */
+
+function calcularDuracion() {
+
+    if (
+        !horaInicioInput ||
+        !horaFinInput ||
+        !durationText ||
+        !durationBox
+    ) {
+
+        return null;
+
+    }
+
+
+    const inicio =
+        convertirHoraAMinutos(
+            horaInicioInput.value
+        );
+
+
+    const finOriginal =
+        convertirHoraAMinutos(
+            horaFinInput.value
+        );
+
+
+    if (
+        inicio === null ||
+        finOriginal === null
+    ) {
+
+        durationText.textContent =
+            "Selecciona el horario del evento";
+
+
+        durationBox.classList.remove(
+            "active"
+        );
+
+
+        return null;
+
+    }
+
+
+    let fin =
+        finOriginal;
+
+
+    /*
+       Si la hora de término es menor
+       o igual que la de inicio,
+       asumimos que termina después
+       de medianoche.
+    */
+
+    if (fin <= inicio) {
+
+        fin += 24 * 60;
+
+    }
+
+
+    const diferencia =
+        fin - inicio;
+
+
+    const horas =
+        Math.floor(
+            diferencia / 60
+        );
+
+
+    const minutos =
+        diferencia % 60;
+
+
+    let texto =
+        "";
+
+
+    if (horas > 0) {
+
+        texto +=
+            `${horas} ${
+                horas === 1
+                    ? "hora"
+                    : "horas"
+            }`;
+
+    }
+
+
+    if (minutos > 0) {
+
+        if (texto !== "") {
+            texto += " ";
+        }
+
+
+        texto +=
+            `${minutos} ${
+                minutos === 1
+                    ? "minuto"
+                    : "minutos"
+            }`;
+
+    }
+
+
+    if (texto === "") {
+
+        texto =
+            "Horario no válido";
+
+    }
+
+
+    durationText.textContent =
+        texto;
+
+
+    durationBox.classList.add(
+        "active"
     );
+
+
+    return {
+        inicio,
+        fin,
+        diferencia,
+        texto
+    };
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR DURACIÓN
+========================================================= */
+
+if (horaInicioInput) {
+
+    horaInicioInput.addEventListener(
+        "change",
+        function () {
+
+            calcularDuracion();
+
+            limpiarError(
+                horaInicioInput,
+                horaInicioError
+            );
+
+        }
+    );
+
+}
+
+
+if (horaFinInput) {
+
+    horaFinInput.addEventListener(
+        "change",
+        function () {
+
+            calcularDuracion();
+
+            limpiarError(
+                horaFinInput,
+                horaFinError
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GOOGLE MAPS
+========================================================= */
+
+function actualizarGoogleMaps() {
+
+    if (
+        !ubicacionInput ||
+        !nombreLugarInput ||
+        !mapsLink ||
+        !mapsPreviewText
+    ) {
+
+        return;
+
+    }
+
+
+    const ubicacion =
+        ubicacionInput.value.trim();
+
+
+    const nombreLugar =
+        nombreLugarInput.value.trim();
+
+
+    if (
+        ubicacion === "" ||
+        nombreLugar === ""
+    ) {
+
+        mapsPreviewText.textContent =
+            "Completa la ciudad y el nombre del lugar para generar el enlace.";
+
+
+        mapsLink.href =
+            "#";
+
+
+        mapsLink.classList.remove(
+            "active"
+        );
+
+
+        return;
+
+    }
+
+
+    const busqueda =
+        `${nombreLugar}, ${ubicacion}`;
+
+
+    const url =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(
+            busqueda
+        );
+
+
+    mapsLink.href =
+        url;
+
+
+    mapsLink.classList.add(
+        "active"
+    );
+
+
+    mapsPreviewText.textContent =
+        busqueda;
+
+}
+
+
+if (ubicacionInput) {
+
+    ubicacionInput.addEventListener(
+        "input",
+        function () {
+
+            actualizarGoogleMaps();
+
+            limpiarError(
+                ubicacionInput,
+                ubicacionError
+            );
+
+        }
+    );
+
+}
+
+
+if (nombreLugarInput) {
+
+    nombreLugarInput.addEventListener(
+        "input",
+        function () {
+
+            actualizarGoogleMaps();
+
+            limpiarError(
+                nombreLugarInput,
+                nombreLugarError
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CONTADOR DE COMENTARIOS
+========================================================= */
+
+if (
+    comentariosInput &&
+    comentariosCounter
+) {
+
+    comentariosInput.addEventListener(
+        "input",
+        function () {
+
+            comentariosCounter.textContent =
+                this.value.length;
+
+        }
+    );
+
+}
 
 
 /* =========================================================
@@ -306,58 +775,6 @@ function limpiarError(
 
 
 /* =========================================================
-   VALIDAR NOMBRE
-========================================================= */
-
-function validarNombre() {
-
-    if (!nombreInput) {
-        return false;
-    }
-
-
-    const nombre =
-        nombreInput.value.trim();
-
-
-    if (nombre.length === 0) {
-
-        mostrarError(
-            nombreInput,
-            nombreError,
-            "Escribe tu nombre completo."
-        );
-
-        return false;
-
-    }
-
-
-    if (nombre.length < 3) {
-
-        mostrarError(
-            nombreInput,
-            nombreError,
-            "El nombre es demasiado corto."
-        );
-
-        return false;
-
-    }
-
-
-    limpiarError(
-        nombreInput,
-        nombreError
-    );
-
-
-    return true;
-
-}
-
-
-/* =========================================================
    VALIDAR TIPO DE EVENTO
 ========================================================= */
 
@@ -405,7 +822,9 @@ function validarFecha() {
     }
 
 
-    if (fechaInput.value === "") {
+    if (
+        fechaInput.value === ""
+    ) {
 
         mostrarError(
             fechaInput,
@@ -464,24 +883,24 @@ function validarFecha() {
 
 
 /* =========================================================
-   VALIDAR HORA
+   VALIDAR HORA DE INICIO
 ========================================================= */
 
-function validarHora() {
+function validarHoraInicio() {
 
-    if (!horaInput) {
+    if (!horaInicioInput) {
         return false;
     }
 
 
     if (
-        horaInput.value === ""
+        horaInicioInput.value === ""
     ) {
 
         mostrarError(
-            horaInput,
-            horaError,
-            "Selecciona un horario."
+            horaInicioInput,
+            horaInicioError,
+            "Selecciona la hora de inicio."
         );
 
         return false;
@@ -490,8 +909,375 @@ function validarHora() {
 
 
     limpiarError(
-        horaInput,
-        horaError
+        horaInicioInput,
+        horaInicioError
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR HORA DE TÉRMINO
+========================================================= */
+
+function validarHoraFin() {
+
+    if (!horaFinInput) {
+        return false;
+    }
+
+
+    if (
+        horaFinInput.value === ""
+    ) {
+
+        mostrarError(
+            horaFinInput,
+            horaFinError,
+            "Selecciona la hora de término."
+        );
+
+        return false;
+
+    }
+
+
+    limpiarError(
+        horaFinInput,
+        horaFinError
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR HORARIO COMPLETO
+========================================================= */
+
+function validarHorario() {
+
+    if (
+        !horaInicioInput ||
+        !horaFinInput
+    ) {
+
+        return false;
+
+    }
+
+
+    const inicio =
+        convertirHoraAMinutos(
+            horaInicioInput.value
+        );
+
+
+    const fin =
+        convertirHoraAMinutos(
+            horaFinInput.value
+        );
+
+
+    if (
+        inicio === null ||
+        fin === null
+    ) {
+
+        return false;
+
+    }
+
+
+    /*
+       Permitimos eventos que terminen
+       después de medianoche.
+    */
+
+    let diferencia =
+        fin - inicio;
+
+
+    if (diferencia <= 0) {
+
+        diferencia +=
+            24 * 60;
+
+    }
+
+
+    /*
+       Evitamos horarios absurdos
+       de 24 horas.
+    */
+
+    if (
+        diferencia > 12 * 60
+    ) {
+
+        mostrarError(
+            horaFinInput,
+            horaFinError,
+            "El horario seleccionado supera las 12 horas."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR SERVICIO
+========================================================= */
+
+function validarServicio() {
+
+    if (!servicioInput) {
+        return false;
+    }
+
+
+    if (
+        servicioInput.value === ""
+    ) {
+
+        mostrarError(
+            servicioInput,
+            servicioError,
+            "Selecciona el servicio que necesitas."
+        );
+
+        return false;
+
+    }
+
+
+    limpiarError(
+        servicioInput,
+        servicioError
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR UBICACIÓN
+========================================================= */
+
+function validarUbicacion() {
+
+    if (!ubicacionInput) {
+        return false;
+    }
+
+
+    const valor =
+        ubicacionInput.value.trim();
+
+
+    if (valor.length < 3) {
+
+        mostrarError(
+            ubicacionInput,
+            ubicacionError,
+            "Escribe la ciudad o comunidad del evento."
+        );
+
+        return false;
+
+    }
+
+
+    limpiarError(
+        ubicacionInput,
+        ubicacionError
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR NOMBRE DEL LUGAR
+========================================================= */
+
+function validarNombreLugar() {
+
+    if (!nombreLugarInput) {
+        return false;
+    }
+
+
+    const valor =
+        nombreLugarInput.value.trim();
+
+
+    if (valor.length < 2) {
+
+        mostrarError(
+            nombreLugarInput,
+            nombreLugarError,
+            "Escribe el nombre del lugar del evento."
+        );
+
+        return false;
+
+    }
+
+
+    limpiarError(
+        nombreLugarInput,
+        nombreLugarError
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR TIPO DE LUGAR
+========================================================= */
+
+function validarTipoLugar() {
+
+    if (!tipoLugarInput) {
+        return false;
+    }
+
+
+    if (
+        tipoLugarInput.value === ""
+    ) {
+
+        mostrarError(
+            tipoLugarInput,
+            tipoLugarError,
+            "Selecciona el tipo de lugar."
+        );
+
+        return false;
+
+    }
+
+
+    limpiarError(
+        tipoLugarInput,
+        tipoLugarError
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR NOMBRE
+========================================================= */
+
+function validarNombre() {
+
+    if (!nombreInput) {
+        return false;
+    }
+
+
+    const nombre =
+        nombreInput.value.trim();
+
+
+    if (nombre.length === 0) {
+
+        mostrarError(
+            nombreInput,
+            nombreError,
+            "Escribe tu nombre completo."
+        );
+
+        return false;
+
+    }
+
+
+    if (nombre.length < 3) {
+
+        mostrarError(
+            nombreInput,
+            nombreError,
+            "El nombre es demasiado corto."
+        );
+
+        return false;
+
+    }
+
+
+    limpiarError(
+        nombreInput,
+        nombreError
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   VALIDAR TELÉFONO
+========================================================= */
+
+function validarTelefono() {
+
+    if (!telefonoInput) {
+        return false;
+    }
+
+
+    const telefono =
+        telefonoInput.value.trim();
+
+
+    const digitos =
+        telefono.replace(
+            /\D/g,
+            ""
+        );
+
+
+    if (digitos.length < 10) {
+
+        mostrarError(
+            telefonoInput,
+            telefonoError,
+            "Escribe un número de WhatsApp válido de al menos 10 dígitos."
+        );
+
+        return false;
+
+    }
+
+
+    limpiarError(
+        telefonoInput,
+        telefonoError
     );
 
 
@@ -518,6 +1304,7 @@ function formatearFecha(
     return fechaObjeto.toLocaleDateString(
         "es-MX",
         {
+            weekday: "long",
             day: "numeric",
             month: "long",
             year: "numeric"
@@ -537,6 +1324,10 @@ function crearMensajeWhatsApp() {
         nombreInput.value.trim();
 
 
+    const telefono =
+        telefonoInput.value.trim();
+
+
     const tipoEvento =
         tipoEventoInput.value;
 
@@ -545,8 +1336,40 @@ function crearMensajeWhatsApp() {
         fechaInput.value;
 
 
-    const hora =
-        horaInput.value;
+    const horaInicio =
+        horaInicioInput.value;
+
+
+    const horaFin =
+        horaFinInput.value;
+
+
+    const servicio =
+        servicioInput.value;
+
+
+    const ubicacion =
+        ubicacionInput.value.trim();
+
+
+    const nombreLugar =
+        nombreLugarInput.value.trim();
+
+
+    const tipoLugar =
+        tipoLugarInput.value;
+
+
+    const invitados =
+        invitadosInput
+            ? invitadosInput.value
+            : "";
+
+
+    const comentarios =
+        comentariosInput
+            ? comentariosInput.value.trim()
+            : "";
 
 
     const fechaFormateada =
@@ -555,15 +1378,116 @@ function crearMensajeWhatsApp() {
         );
 
 
-    const mensaje =
+    const duracion =
+        calcularDuracion();
+
+
+    const duracionTexto =
+        duracion
+            ? duracion.texto
+            : "No especificada";
+
+
+    /*
+       Crear enlace de Google Maps.
+    */
+
+    const busquedaMaps =
+        `${nombreLugar}, ${ubicacion}`;
+
+
+    const mapsUrl =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(
+            busquedaMaps
+        );
+
+
+    /*
+       Mensaje final.
+    */
+
+    let mensaje =
 
 `Hola, me gustaría solicitar una cotización para mi evento.
 
+━━━━━━━━━━━━━━━━━━
+📋 DATOS DEL EVENTO
+━━━━━━━━━━━━━━━━━━
+
+*Tipo de evento:* ${tipoEvento}
+
+*Fecha:* ${fechaFormateada}
+
+*Horario:* ${horaInicio} a ${horaFin}
+
+*Duración aproximada:* ${duracionTexto}
+
+*Servicio solicitado:* ${servicio}
+
+━━━━━━━━━━━━━━━━━━
+📍 UBICACIÓN
+━━━━━━━━━━━━━━━━━━
+
+*Ciudad / comunidad:* ${ubicacion}
+
+*Lugar:* ${nombreLugar}
+
+*Tipo de lugar:* ${tipoLugar}
+
+*Ubicación en Google Maps:*
+${mapsUrl}`;
+
+
+    if (invitados) {
+
+        mensaje +=
+
+`
+
+*Invitados aproximados:* ${invitados}`;
+
+    }
+
+
+    mensaje +=
+
+`
+
+━━━━━━━━━━━━━━━━━━
+👤 DATOS DE CONTACTO
+━━━━━━━━━━━━━━━━━━
+
 *Nombre:* ${nombre}
 
-*Servicio:* ${tipoEvento}
+*WhatsApp:* ${telefono}`;
 
-*Fecha y hora:* ${fechaFormateada} a las ${hora}`;
+
+    if (comentarios) {
+
+        mensaje +=
+
+`
+
+━━━━━━━━━━━━━━━━━━
+📝 COMENTARIOS
+━━━━━━━━━━━━━━━━━━
+
+${comentarios}`;
+
+    }
+
+
+    mensaje +=
+
+`
+
+━━━━━━━━━━━━━━━━━━
+
+Entiendo que esta solicitud no representa una reservación y que la disponibilidad y cotización final deberán ser confirmadas por la agrupación.
+
+¡Gracias!`;
+
 
 
     return mensaje;
@@ -584,10 +1508,6 @@ if (quoteForm) {
             event.preventDefault();
 
 
-            const nombreValido =
-                validarNombre();
-
-
             const tipoEventoValido =
                 validarTipoEvento();
 
@@ -596,38 +1516,84 @@ if (quoteForm) {
                 validarFecha();
 
 
-            const horaValida =
-                validarHora();
+            const horaInicioValida =
+                validarHoraInicio();
 
 
-            /*
-                Si existe algún error,
-                detenemos el proceso.
-            */
+            const horaFinValida =
+                validarHoraFin();
+
+
+            const horarioValido =
+                validarHorario();
+
+
+            const servicioValido =
+                validarServicio();
+
+
+            const ubicacionValida =
+                validarUbicacion();
+
+
+            const nombreLugarValido =
+                validarNombreLugar();
+
+
+            const tipoLugarValido =
+                validarTipoLugar();
+
+
+            const nombreValido =
+                validarNombre();
+
+
+            const telefonoValido =
+                validarTelefono();
+
 
             if (
-                !nombreValido ||
                 !tipoEventoValido ||
                 !fechaValida ||
-                !horaValida
+                !horaInicioValida ||
+                !horaFinValida ||
+                !horarioValido ||
+                !servicioValido ||
+                !ubicacionValida ||
+                !nombreLugarValido ||
+                !tipoLugarValido ||
+                !nombreValido ||
+                !telefonoValido
             ) {
+
+                /*
+                   Llevar al primer error visible.
+                */
+
+                const primerError =
+                    quoteForm.querySelector(
+                        ".error"
+                    );
+
+
+                if (primerError) {
+
+                    primerError.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                }
+
 
                 return;
 
             }
 
 
-            /*
-                Crear mensaje.
-            */
-
             const mensaje =
                 crearMensajeWhatsApp();
 
-
-            /*
-                Crear enlace de WhatsApp.
-            */
 
             const url =
                 "https://wa.me/" +
@@ -637,10 +1603,6 @@ if (quoteForm) {
                     mensaje
                 );
 
-
-            /*
-                Abrir WhatsApp.
-            */
 
             window.open(
                 url,
@@ -654,25 +1616,8 @@ if (quoteForm) {
 
 
 /* =========================================================
-   LIMPIAR ERRORES AL ESCRIBIR
+   LIMPIAR ERRORES
 ========================================================= */
-
-if (nombreInput) {
-
-    nombreInput.addEventListener(
-        "input",
-        function () {
-
-            limpiarError(
-                nombreInput,
-                nombreError
-            );
-
-        }
-    );
-
-}
-
 
 if (tipoEventoInput) {
 
@@ -708,15 +1653,66 @@ if (fechaInput) {
 }
 
 
-if (horaInput) {
+if (servicioInput) {
 
-    horaInput.addEventListener(
+    servicioInput.addEventListener(
         "change",
         function () {
 
             limpiarError(
-                horaInput,
-                horaError
+                servicioInput,
+                servicioError
+            );
+
+        }
+    );
+
+}
+
+
+if (tipoLugarInput) {
+
+    tipoLugarInput.addEventListener(
+        "change",
+        function () {
+
+            limpiarError(
+                tipoLugarInput,
+                tipoLugarError
+            );
+
+        }
+    );
+
+}
+
+
+if (nombreInput) {
+
+    nombreInput.addEventListener(
+        "input",
+        function () {
+
+            limpiarError(
+                nombreInput,
+                nombreError
+            );
+
+        }
+    );
+
+}
+
+
+if (telefonoInput) {
+
+    telefonoInput.addEventListener(
+        "input",
+        function () {
+
+            limpiarError(
+                telefonoInput,
+                telefonoError
             );
 
         }
@@ -764,6 +1760,9 @@ window.addEventListener(
 );
 
 
+controlarBotonArriba();
+
+
 if (backToTop) {
 
     backToTop.addEventListener(
@@ -782,7 +1781,7 @@ if (backToTop) {
 
 
 /* =========================================================
-   AÑO AUTOMÁTICO DEL FOOTER
+   AÑO AUTOMÁTICO
 ========================================================= */
 
 if (currentYear) {
@@ -806,10 +1805,6 @@ const elementosAnimados =
         ".social-link"
     );
 
-
-/*
-    Preparar elementos.
-*/
 
 elementosAnimados.forEach(
     function (elemento) {
@@ -884,11 +1879,6 @@ if (
 
 } else {
 
-    /*
-        Compatibilidad con navegadores
-        antiguos.
-    */
-
     elementosAnimados.forEach(
         function (elemento) {
 
@@ -905,9 +1895,13 @@ if (
 
 
 /* =========================================================
-   MENSAJE DE COMPROBACIÓN
+   COMPROBACIÓN
 ========================================================= */
 
 console.log(
     "Landing Page cargada correctamente."
+);
+
+console.log(
+    "Formulario de cotización actualizado."
 );
